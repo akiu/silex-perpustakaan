@@ -1,0 +1,64 @@
+{% include "layouts/main.twig" %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            {% include "layouts/userNav.twig" %}
+        </div>
+        <div class="col-lg-9">
+
+            <table class="table table-stripped">
+                <thead>
+                <tr>
+                    <th>Book Title</th>
+                    <th>Created Date</th>
+                    <th>Number of Days</th>
+                    <th>Returning Date</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                {% for data in datas %}
+                    <tr>
+                        <td>
+                            {{ data.bookTitle }}
+                        </td>
+                        <td>
+                            {{ data.createdDate }}
+                        </td>
+                        <td>
+                            {{ data.daysBorrow }}
+                        </td>
+                        <td>
+                            {{ data.returningDate }}
+                        </td>
+                        <td>
+
+                            {% if  'now' | date('y-m-d') | date('U') == data.returningDate | date('U') %}
+                            <button class="btn btn-default">Today is last day</button>
+                            {% elseif 'now' | date('y-m-d') | date('U') > data.returningDate | date('U') %}
+                                <button class="btn btn-success">you late</button>
+                            {% else %}
+                            <button class="btn btn-success">in Borrowing progress</button>
+                            {% endif %}
+
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+{% include "layouts/footer.html" %}
+{% include "layouts/js.twig" %}
+<script>
+    $('.date-picker').datepicker({
+        format: "yyyy/mm/dd"
+    });
+</script>
+{% include "layouts/end.twig" %}

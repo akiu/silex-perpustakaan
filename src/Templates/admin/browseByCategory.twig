@@ -1,0 +1,136 @@
+{% include "admin/layouts/header.twig" %}
+
+<!-- Page Content -->
+<div id="page-wrapper">
+
+    <div class="row" style="margin-top: 30px;">
+        <div class="col-lg-4">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">Select Categories</div>
+                <div class="panel-body">
+                    <select class="form-control" id="category">
+                        {% for category in categories %}
+                            <option value="{{ category }}">{{ category }}</option>
+                        {% endfor %}
+                    </select>
+
+
+                    <br />
+
+                    <button class="btn btn-primary" id="goto">Open</button>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="col-lg-12">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>{{ category | capitalize }}</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-stripped">
+                        <thead>
+                        <tr>
+
+                            <th>Book Title</th>
+                            <th>Author</th>
+                            <th>Slug</th>
+                            <th>Actions</th>
+
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        {% for data in datas %}
+                            <tr>
+
+                                <td><a href="{{app.url_generator.generate('browseBySlug', {'slug' : data.slug}) }}">{{ data.title }}</a></td>
+                                <td>{{ data.author }}</td>
+                                <td>{{ data.slug }}</td>
+                                <td><form style ='float: left; padding: 5px;' method="POST" action="{{app.url_generator.generate('deleteBySlug', {'slug' : data.slug}) }}">
+                                        <button type="button" class="btn btn-danger delete-button">Delete</button>
+                                    </form>
+                                    <form style ='float: left; padding: 5px;' method="GET" action="{{app.url_generator.generate('editBookBySlug', {'slug' : data.slug}) }}">
+                                        <input class="btn btn-info" value="Edit" type="submit">
+                                    </form>
+                                    <form style ='float: left; padding: 5px;' method="POST" action="{{app.url_generator.generate('addFeaturedBook') }}">
+                                        <input type="text" hidden value="{{ data.slug }}" name="slug"/>
+                                        <input class="btn btn-success" value="Add To Featured" type="submit">
+                                    </form>
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+<!-- /#page-content-wrapper -->
+
+</div>
+
+{% include "admin/layouts/js.twig" %}
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content panel-warning">
+            <div class="modal-header panel-warning">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h6 class="modal-title"><strong>Delete Confirmation</strong></h6>
+            </div>
+            <div class="modal-body">
+                <h6>Are you sure to delete this book ?</h6>
+            </div>
+            <div class="modal-footer">
+                <button id="confirm-delete-button" type="button" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function() {
+        $("#goto").click(function() {
+
+            var category = $( "#category option:selected" ).text();
+
+            location.href = 'http://localhost:8000/admin/book/category/' + category;
+
+        });
+
+        $(".delete-button").click(function() {
+
+            $("#myModal").modal();
+
+            var $form = $(this).closest("form");
+
+            $("#confirm-delete-button").click(function() {
+
+                $form.submit();
+
+            });
+
+
+        });
+    });
+
+</script>
+
+{% include "admin/layouts/footer.twig" %}

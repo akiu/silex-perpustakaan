@@ -1,0 +1,93 @@
+{% include "layouts/main.twig" %}
+{% for message in app.session.getFlashBag.get('message') %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong> {{ message }} </strong>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    {% include "layouts/userNav.twig" %}
+                </div>
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                            {% if profile %}
+                            <div class="panel panel-success">
+                                <div class="panel-heading"><h6 style="color: white;">Your Data</h6></div>
+                                <div class="panel-body">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Nama Depan</div>
+                                        <div class="panel-body">
+                                            <h6>{{ profile.namaDepan }}<h6>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Nama Belakang</div>
+                                        <div class="panel-body">
+                                            <h6>{{ profile.namaBelakang }}<h6>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Tanggal Lahir</div>
+                                        <div class="panel-body">
+                                            <h6>{{ profile.ttl }}<h6>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Alamat</div>
+                                        <div class="panel-body">
+                                            <h6>{{ profile.alamat }}<h6>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Jenis Identitas</div>
+                                        <div class="panel-body">
+                                            <h6>{{ profile.jenisIdentitas }}<h6>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">No Identitas</div>
+                                        <div class="panel-body">
+                                            <h6>{{ profile.noIdentitas }}<h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% endif %}
+                                            <a href="{{app.url_generator.generate('editUserProfile') }}" class="btn btn-info">Edit Profile</a>
+
+                        </div>
+
+                        <div class="col-lg-6">
+
+                            {% if profile %}
+                                <div class="panel panel-success">
+                                    <div class="panel-heading">
+                                        <h6 style="color: white;">Profile Picture</h6>
+                                    </div>
+                                    <div class="panel-body">
+                                        <img style="width: 350px; height: 350px;"
+                                             src="http://localhost:8000/{{profile.profilePicturePath }}" />
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% include "layouts/footer.html" %}
+{% include "layouts/js.twig" %}
+{% include "layouts/end.twig" %}

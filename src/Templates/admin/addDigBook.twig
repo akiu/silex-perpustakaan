@@ -1,0 +1,32 @@
+{% include "admin/layouts/header.twig" %}
+
+<!-- Page Content -->
+<div id="page-wrapper">
+
+    <div class="row">
+        <br />
+        <div class="col-lg-12">
+
+            <div class="panel panel-success">
+                <div class="panel-heading"><h6 style="color: white;">Add Digital Books Form</h6></div>
+                <div class="panel-body">
+                    <form method="POST" enctype="multipart/form-data" action={{app.url_generator.generate('addDigBook') }} novalidate>
+
+                        {% include 'admin/addDigBookForm.twig' %}
+
+                        <input class="btn btn-primary" type="submit" value="Add" />
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<!-- /#page-content-wrapper -->
+
+</div>
+
+{% include "admin/layouts/js.twig" %}
+
+{% include "admin/layouts/footer.twig" %}

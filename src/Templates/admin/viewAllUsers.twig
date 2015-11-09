@@ -1,0 +1,96 @@
+{% include "admin/layouts/header.twig" %}
+
+<!-- Page Content -->
+<div id="page-wrapper">
+
+    <div class="row" style="margin-top: 30px;">
+
+        <div class="col-lg-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">Users</div>
+                <div class="panel-body">
+                    <table class="table table-stripped">
+                        <thead>
+                        <tr>
+
+                            <th>User Id</th>
+                            <th>User Name</th>
+                            <th>User Email</th>
+                            <th>Created Date</th>
+                            <th>User Status</th>
+                            <th>Actions</th>
+
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        {% for data in pagination %}
+                            <tr>
+                                <td>{{ data.id }}</td>
+                                <td><a href="{{ app.url_generator.generate('viewUserProfile',  {'id' : data.id}) }}">{{ data.username }}</a></td>
+                                <td>{{ data.email }}</td>
+                                <td>{{ data.created }}</td>
+                                <td>
+                                    {% if data.status == "active" %}
+                                        <button class="btn btn-success">Active</button>
+                                    {% elseif  data.status == "banned" %}
+                                        <button class="btn btn-danger">Banned</button>
+                                    {% else %}
+                                        <button class="btn btn-info">Pending</button>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if data.status == "active" %}
+                                        <form method="POST" action="{{ app.url_generator.generate('banUser') }}">
+
+                                            <input type="text" value="{{ data.id }}" hidden name="userId" />
+                                            <button type="submit" class="btn btn-danger">Ban <i class="fa fa-ban"></i></button>
+
+                                        </form>
+                                    {% else %}
+                                        <form method="POST" action="{{ app.url_generator.generate('activateUser') }}">
+
+                                            <input type="text" value="{{ data.id }}" hidden name="userId" />
+                                            <button type="submit" class="btn btn-success">Activate <i class="fa fa-check"></i></button>
+
+                                        </form>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    {{ dezull_dbal_pagination_render(pagination) }}
+
+
+
+
+    <!-- /#page-content-wrapper -->
+
+</div>
+
+{% include "admin/layouts/js.twig" %}
+
+<script>
+    $(document).ready(function() {
+
+        $(".pagination").find("a").addClass('btn btn-primary');
+
+        $(".pagination").find("span").addClass('btn btn-danger');
+
+        $(".pagination > ul > li").css("display", "inline");
+
+
+    });
+</script>
+
+{% include "admin/layouts/footer.twig" %}

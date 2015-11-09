@@ -1,0 +1,54 @@
+{% include "admin/layouts/header.twig" %}
+
+
+<div id="page-wrapper">
+    <br />
+    <div class="panel panel-success">
+        <div class="panel-heading">Categories</div>
+        <div class="panel-body">
+            <table class="table table-stripped">
+                <thead>
+                <tr>
+                    <th>Categories</th>
+                    <th>Slug</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                {% for category in pagination %}
+                    <tr>
+                        <td>{{ category.name }}</td>
+                        <td>{{ category.slug }}</td>
+                        <td><a class="btn btn-default" href="{{app.url_generator.generate('browseByCategory', {'category' : category.slug}) }}">Go</a></td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {{ dezull_dbal_pagination_render(pagination) }}
+
+</div>
+
+{% include "admin/layouts/js.twig" %}
+
+    <script>
+        $(document).ready(function() {
+
+            $(".pagination").find("a").addClass('btn btn-primary');
+
+            $(".pagination").find("span").addClass('btn btn-danger');
+
+            $(".pagination > ul > li").css("display", "inline");
+
+
+        });
+    </script>
+
+
+
+{% include "admin/layouts/footer.twig" %}

@@ -1,0 +1,24 @@
+{% include "layouts/main.twig" %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            {% include "layouts/userNav.twig" %}
+        </div>
+        <div class="col-lg-9">
+
+            <form enctype="multipart/form-data" action="{{ app.url_generator.generate('editUserProfile') }}" method="POST" novalidate>
+                {% include "layouts/editUserProfileForm.twig" %}
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% include "layouts/footer.html" %}
+{% include "layouts/js.twig" %}
+<script>
+    $('.date-picker').datepicker({
+        format: "yyyy/mm/dd"
+    });
+</script>
+{% include "layouts/end.twig" %}

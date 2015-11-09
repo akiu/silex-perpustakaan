@@ -1,0 +1,118 @@
+{% include "admin/layouts/header.twig" %}
+
+<!-- Page Content -->
+<div id="page-wrapper">
+
+    <div class="row" style="margin-top: 30px;">
+        {% if data %}
+        <div class="col-lg-12">
+            <br />
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-success">
+                        <div class="panel-heading"><h5 style="color: white;">User Profile</h5></div>
+                        <div class="panel-body">
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><h6>Nama Depan </h6></div>
+                                <div class="panel-body">
+                                    <h6>{{ data.namaDepan }}</h6>
+
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><h6>Nama Belakang</h6></div>
+                                <div class="panel-body">
+                                    <h6>{{ data.namaBelakang }}</h6>
+
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><h6>Tanggal Lahir</h6></div>
+                                <div class="panel-body">
+                                    <h6>{{ data.ttl }}</h6>
+
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><h6>Alamat</h6></div>
+                                <div class="panel-body">
+                                    <h6>{{ data.alamat }}</h6>
+
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><h6>Jenis Identitas</h6></div>
+                                <div class="panel-body">
+                                    <h6>{{ data.jenisIdentitas }}</h6>
+
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><h6>No Identitas</h6></div>
+                                <div class="panel-body">
+                                    <h6>{{ data.noIdentitas }}</h6>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-success">
+                        <div class="panel-heading"><h5 style="color: white;">Profile Picture</h5></div>
+                        <div class="panel-body">
+                            <img style="width: 400px; height: 400px;" src="http://localhost:8000/{{ data.profilePicturePath }}" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+            <div class="col-lg-12">
+                <h1>This people dont have profile yet</h1>
+            </div>
+        {% endif %}
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h6>Data about this User</h6>
+                </div>
+                <div class="panel-body">
+                    <h5>Books are being borrowed</h5>
+                    <h5>Borrowing books request</h5>
+                    <h5>Borrowing books history</h5>
+                    <h5>Number of late</h5>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+    <!-- /#page-content-wrapper -->
+
+</div>
+
+{% include "admin/layouts/js.twig" %}
+
+<script>
+    $(document).ready(function() {
+
+        $(".pagination").find("a").addClass('btn btn-primary');
+
+        $(".pagination").find("span").addClass('btn btn-danger');
+
+        $(".pagination > ul > li").css("display", "inline");
+
+
+    });
+</script>
+
+{% include "admin/layouts/footer.twig" %}

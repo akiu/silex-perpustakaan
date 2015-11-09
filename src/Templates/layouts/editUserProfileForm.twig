@@ -1,0 +1,65 @@
+<div class="form-group">
+    {{ form_label(form.namaDepan) }}
+    {{ form_widget(form.namaDepan, {'attr' : {'class' : 'form-control'}}) }}
+    <div style="color: red;">
+        {{ form_errors(form.namaDepan) }}
+
+    </div>
+</div>
+<div class="form-group">
+    {{ form_label(form.namaBelakang) }}
+    {{ form_widget(form.namaBelakang, {'attr' : {'class' : 'form-control'}}) }}
+    <div style="color: red;">
+        {{ form_errors(form.namaBelakang) }}
+
+    </div>
+</div>
+<div class="form-group">
+    {{ form_label(form.ttl) }}
+    {{ form_widget(form.ttl, {'attr' : {'class' : 'date-picker form-control'}}) }}
+    <div style="color: red;">
+        {{ form_errors(form.ttl) }}
+
+    </div>
+</div>
+<div class="form-group">
+    {{ form_label(form.alamat) }}
+    {{ form_widget(form.alamat, {'attr' : {'class' : 'form-control'}}) }}
+    <div style="color: red;">
+        {{ form_errors(form.alamat) }}
+
+    </div>
+</div>
+<div class="form-group">
+    {{ form_label(form.jenisIdentitas) }}
+    {{ form_widget(form.jenisIdentitas, {'attr' : {'class' : 'form-control'}}) }}
+    <div style="color: red;">
+        {{ form_errors(form.jenisIdentitas) }}
+
+    </div>
+</div>
+<div class="form-group">
+    {{ form_label(form.noIdentitas) }}
+    {{ form_widget(form.noIdentitas, {'attr' : {'class' : 'form-control'}}) }}
+    <div style="color: red;">
+        {{ form_errors(form.noIdentitas) }}
+
+    </div>
+</div>
+<div class="form-group">
+    {{ form_label(form.profilePicture) }}
+    {{ form_widget(form.profilePicture, {'attr' : {'class' : 'form-control'}}) }}
+    <div style="color: red;">
+        {{ form_errors(form.profilePicture) }}
+
+    </div>
+</div>
+{{ form_row(form._token) }}
+
+<div class="form-group">
+
+    {{ form_widget(form.createProfile, {'attr' : {'class' : 'btn btn-success'}}) }}
+
+</div>
+
+

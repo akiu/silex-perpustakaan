@@ -1,0 +1,82 @@
+<div class="form-group">
+    {{ form_label(form.title) }}
+    {% if nama is defined %}
+        {{ form_widget(form.title, {'attr' : {'class' : 'form-control', 'value': nama}}) }}
+    {% else %}
+        {{ form_widget(form.title, {'attr' : {'class' : 'form-control', 'placeholder':'category'}}) }}
+    {% endif %}
+    <div style="color: red;">
+        {{ form_errors(form.title) }}
+
+    </div>
+</div>
+<div class="form-group">
+    {{ form_label(form.category) }}
+    {% if slug is defined %}
+        {{ form_widget(form.category, {'attr' : {'class' : 'form-control', 'value': slug}}) }}
+    {% else %}
+        {{ form_widget(form.category, {'attr' : {'class' : 'form-control', 'placeholder':'slug'}}) }}
+    {% endif %}
+    <div style="color: red;">
+        {{ form_errors(form.category) }}
+
+    </div>
+</div>
+
+<div class="form-group">
+    {{ form_label(form.author) }}
+    {% if nama is defined %}
+        {{ form_widget(form.author, {'attr' : {'class' : 'form-control', 'value': nama}}) }}
+    {% else %}
+        {{ form_widget(form.author, {'attr' : {'class' : 'form-control', 'placeholder':'category'}}) }}
+    {% endif %}
+    <div style="color: red;">
+        {{ form_errors(form.author) }}
+
+    </div>
+</div>
+
+<div class="form-group">
+    {{ form_label(form.description) }}
+    {% if nama is defined %}
+        {{ form_widget(form.description, {'attr' : {'class' : 'form-control', 'value': nama}}) }}
+    {% else %}
+        {{ form_widget(form.description, {'attr' : {'class' : 'form-control', 'placeholder':'category'}}) }}
+    {% endif %}
+    <div style="color: red;">
+        {{ form_errors(form.description) }}
+
+    </div>
+</div>
+<div class="form-group">
+    {{ form_label(form.totalPage) }}
+    {% if slug is defined %}
+        {{ form_widget(form.totalPage, {'attr' : {'class' : 'form-control', 'value': slug}}) }}
+    {% else %}
+        {{ form_widget(form.totalPage, {'attr' : {'class' : 'form-control', 'placeholder':'slug'}}) }}
+    {% endif %}
+    <div style="color: red;">
+        {{ form_errors(form.totalPage) }}
+
+    </div>
+</div>
+
+<div class="form-group">
+    {{ form_label(form.image) }}
+    {{ form_widget(form.image, {'attr' : {'class' : 'form-control'}}) }}
+    <div style="color: red;">
+        {{ form_errors(form.image) }}
+
+    </div>
+</div>
+
+<div class="form-group">
+    {{ form_label(form.attachment) }}
+    {{ form_widget(form.attachment, {'attr' : {'class' : 'form-control'}}) }}
+    <div style="color: red;">
+        {{ form_errors(form.attachment) }}
+
+    </div>
+</div>
+
+{{ form_row(form._token) }}

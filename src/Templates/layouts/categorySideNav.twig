@@ -1,0 +1,11 @@
+{% for category in categories %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a style="font-size: 12px;" href="{{app.url_generator.generate('viewBooksByCategory', {'slug' : category}) }}">
+                    {{ category }}
+                </a>
+            </h4>
+        </div>
+    </div>
+{% endfor %}

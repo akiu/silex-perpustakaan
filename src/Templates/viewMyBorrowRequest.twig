@@ -1,0 +1,51 @@
+{% include "layouts/main.twig" %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            {% include "layouts/userNav.twig" %}
+        </div>
+        <div class="col-lg-9">
+
+            <table class="table table-stripped">
+                <thead>
+                    <tr>
+                        <th>Book Title</th>
+                        <th>Created Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for data in datas %}
+                        <tr>
+                            <td>
+                                {{ data.bookTitle }}
+                            </td>
+                            <td>
+                                {{ data.createdDate }}
+                            </td>
+                            <td>
+                                <form method="POST" action="{{ app.url_generator.generate('deleteBorrowRequest') }}">
+                                    <input type="text" hidden name="bookId" value="{{ data.bookId }}"/>
+                                    <input type="submit" class="btn btn-danger" value="Cancel" />
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+{% include "layouts/footer.html" %}
+{% include "layouts/js.twig" %}
+<script>
+    $('.date-picker').datepicker({
+        format: "yyyy/mm/dd"
+    });
+</script>
+{% include "layouts/end.twig" %}

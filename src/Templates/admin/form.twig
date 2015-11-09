@@ -1,0 +1,17 @@
+<div class="form-group">
+    {{ form_label(form.name) }}
+    {% if nama is defined %}
+    {{ form_widget(form.name, {'attr' : {'class' : 'form-control', 'value': nama}}) }}
+    {% else %}
+        {{ form_widget(form.name, {'attr' : {'class' : 'form-control', 'placeholder':'category'}}) }}
+    {% endif %}
+    <div style="color: red;">
+        {{ form_errors(form.name) }}
+
+    </div>
+</div>
+
+{{ form_row(form._token) }}
+
+
+<input class="btn btn-primary" type="submit" value= {{ value }} />

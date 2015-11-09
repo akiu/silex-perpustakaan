@@ -1,0 +1,68 @@
+{% include "layouts/main.twig" %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            {% include "layouts/userNav.twig" %}
+        </div>
+        <div class="col-lg-9">
+
+            <table class="table table-stripped">
+                <thead>
+                <tr>
+
+                    <th>Book Title</th>
+                    <th>Num of Days</th>
+                    <th>Num of Books</th>
+                    <th>Start Date</th>
+                    <th>Return Date</th>
+                    <th>Status</th>
+
+                </tr>
+                </thead>
+
+                <tbody>
+
+                {% for data in pagination %}
+                    <tr>
+                        <td>
+                            {{ data.bookTitle }}
+                        </td>
+                        <td>
+                            {{ data.daysBorrow }}
+                        </td>
+                        <td>
+                            {{ data.bookNumber }}
+                        </td>
+                        <td>
+                            {{ data.startDate }}
+                        </td>
+                        <td>
+                            {{ data.returningDate }}
+                        </td>
+                        <td>
+                            {% if data.status == "late" %}
+                            <button class="btn btn-danger">Late</button>
+                            {% else %}
+                            <button class="btn btn-success">On time</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+            {{ dezull_dbal_pagination_render(pagination) }}
+
+        </div>
+    </div>
+</div>
+
+{% include "layouts/footer.html" %}
+{% include "layouts/js.twig" %}
+<script>
+    $('.date-picker').datepicker({
+        format: "yyyy/mm/dd"
+    });
+</script>
+{% include "layouts/end.twig" %}

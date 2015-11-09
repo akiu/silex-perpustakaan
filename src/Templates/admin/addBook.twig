@@ -1,0 +1,48 @@
+{% include "admin/layouts/header.twig" %}
+
+<!-- Page Content -->
+
+
+<div id="page-wrapper">
+
+        <div class="row">
+            <br />
+
+            {% set message = app.session.getFlashBag.get('add-success-message') %}
+            {% if message is not empty %}
+                        <div class="col-lg-12">
+                            <div class="alert alert-info">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong> You just add book titled
+                                    <a style="color: red;" href="{{app.url_generator.generate('browseBySlug', {'slug' : message[1] }) }}">{{ message[0] }}</a> </strong>
+                            </div>
+                        </div>
+
+            {% endif %}
+
+
+            <div class="col-lg-12">
+                <br />
+                <div class="panel panel-success">
+                    <div class="panel-heading"><h6 style="color: white;">Add Book Form</h6></div>
+                    <div class="panel-body">
+                        <form method="POST" enctype="multipart/form-data" action={{app.url_generator.generate('addBook') }} novalidate>
+
+                            {% include 'admin/addBookForm.twig' %}
+
+                            <input class="btn btn-primary" type="submit" value="Add book" />
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /#page-content-wrapper -->
+
+</div>
+
+{% include "admin/layouts/js.twig" %}
+
+{% include "admin/layouts/footer.twig" %}

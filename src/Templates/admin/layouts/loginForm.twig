@@ -1,0 +1,17 @@
+
+<div class="form-group">
+    {{ form_label(form.username) }}
+    {{ form_widget(form.username, { 'attr' : { 'class' : 'form-control'}}) }}
+    {{ form_errors(form.username) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.password) }}
+    {{ form_widget(form.password, { 'attr' : { 'class' : 'form-control'}}) }}
+    {{ form_errors(form.password) }}
+</div>
+{{ form_row(form._token) }}
+<div class="form-group">
+
+    {{ form_widget(form.login, { 'attr' : {'class' : 'btn btn-success btn-block', 'value': 'Login'}}) }}
+</div>
+<!-- Change this to a button or input when using this as a form -->

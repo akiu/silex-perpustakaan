@@ -1,0 +1,71 @@
+{% include "admin/layouts/header.twig" %}
+
+<!-- Page Content -->
+<div id="page-wrapper">
+        <div class="row">
+            <br/>
+            <div class="col-lg-4">
+
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h6 style="color: white;">Add Category</h6>
+                    </div>
+                    <div class="panel-body">
+                        <form method="post" action={{app.url_generator.generate('addCategory') }} novalidate>
+                            {% include "admin/form.twig" %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h4>Categories</h4></div>
+                    <div class="panel-body">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+
+                                <th>Category</th>
+                                <th>Slug</th>
+                                <th>Actions</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for category in categories %}
+                                <tr>
+                                    <td>{{ category.name | e }}</td>
+                                    <td>{{ category.slug | e }}</td>
+                                    <td>
+                                        <div id="action-box">
+                                            <form style ='float: left; padding: 5px;' method="post" action={{app.url_generator.generate('deleteCategory', {'slug': category.slug} ) }}>
+                                                <input type="submit" class="btn btn-danger" value="delete" />
+                                            </form>
+                                            <form style ='float: left; padding: 5px;' method="get" action={{app.url_generator.generate('editCategory', {'slug': category.slug} ) }}>
+                                                <input type="submit" class="btn btn-info" value="Edit" />
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+        </div>
+
+
+
+        </div>
+
+</div>
+<!-- /#page-content-wrapper -->
+
+
+{% include "admin/layouts/js.twig" %}
+
+
+{% include "admin/layouts/footer.twig" %}

@@ -1,0 +1,84 @@
+{% include "admin/layouts/header.twig" %}
+
+<!-- Page Content -->
+<div id="page-wrapper">
+
+    <div class="row" style="margin-top: 30px;">
+
+        <div class="col-lg-12">
+            <div class="panel panel-danger">
+                <div class="panel-heading"><h6 style="color: white;">Late Books Tabel</h6><form class="pull-right" method="post" action="{{ app.url_generator.generate('generateLateBooks') }}">
+                        <input type="submit" class="btn btn-success" value="Generate" />
+                    </form></div>
+                <div class="panel-body">
+                    <table class="table table-stripped">
+                        <thead>
+                        <tr>
+
+                            <th>User Name</th>
+                            <th>User Id</th>
+                            <th>Book Id</th>
+                            <th>Book Title</th>
+                            <th>Book NUmber</th>
+                            <th>Number of days</th>
+                            <th>Created Date</th>
+                            <th>Return date</th>
+                            <th>Status</th>
+
+
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for data in pagination %}
+                            <tr>
+                                <td>{{ data.userName }}</td>
+                                <td><a href="">{{ data.userId }}</a></td>
+                                <td>{{ data.bookId }}</td>
+                                <td>{{ data.bookTitle }}</td>
+                                <td>{{ data.bookNumber }}</td>
+                                <td>{{ data.daysBorrow }}</td>
+                                <td>{{ data.createdDate }}</td>
+                                <td>{{ data.returningDate }}</td>
+                                <td>
+
+                                    <button class="btn btn-danger">{{ data.status }}</button>
+
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    {{ dezull_dbal_pagination_render(pagination) }}
+
+
+
+
+    <!-- /#page-content-wrapper -->
+
+</div>
+
+{% include "admin/layouts/js.twig" %}
+
+<script>
+    $(document).ready(function() {
+
+        $(".pagination").find("a").addClass('btn btn-primary');
+
+        $(".pagination").find("span").addClass('btn btn-danger');
+
+        $(".pagination > ul > li").css("display", "inline");
+
+
+    });
+</script>
+
+{% include "admin/layouts/footer.twig" %}

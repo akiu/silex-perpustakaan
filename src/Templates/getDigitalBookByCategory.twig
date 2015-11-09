@@ -1,0 +1,55 @@
+{% include "layouts/main.twig" %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2">
+
+            <br />
+            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+
+                {% include "layouts/categoryDigitalSideNav.twig" %}
+
+            </div><!--/category-products-->
+        </div>
+
+
+        <div class="col-lg-10">
+            <div class="row"><!--features_items-->
+
+
+                {% include 'layouts/digitalBooksView.twig' %}
+
+            </div><!--features_items-->
+
+            {{ dezull_dbal_pagination_render(pagination) }}
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+{% include "layouts/footer.html" %}
+	{% include "layouts/js.twig" %}
+<script>
+    $(document).ready(function() {
+
+
+
+        $(".pagination > ul > li").css("display", "inline");
+
+        $(".book-picture").css("width", "300px")
+                .css("height", "300px");
+
+        $(".product-overlay").css("background-color", "blue");
+
+
+
+
+    });
+</script>
+{% include "layouts/end.twig" %}
+
+

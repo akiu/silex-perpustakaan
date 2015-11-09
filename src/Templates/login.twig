@@ -1,0 +1,45 @@
+{% include "layouts/main.twig" %}
+
+{% for message in app.session.getFlashBag.get('message') %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong> {{ message }} </strong>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+		<div class="container">
+			<div class="row">
+				
+				<div class="col-sm-12">
+					<div class="login-form"><!--login form-->
+						<h2>Login to your account</h2>
+						<form action={{app.url_generator.generate('userLogin') }} method="post" novalidate>
+
+
+							{{ form_label(form.username) }}
+							{{ form_widget(form.username) }}
+  							<div style="color: red;">	
+  								{{ form_errors(form.username) }}
+
+							</div>
+							{{ form_label(form.password) }}
+							{{ form_widget(form.password) }}
+							<div style="color: red;">	
+								{{ form_errors(form.password) }}
+							</div>
+							{{ form_row(form._token) }}	
+							{{ form_widget(form.login) }}
+						</form>
+					</div><!--/login form-->
+				</div>
+				
+			</div>
+		</div>
+
+{% include "layouts/footer.html" %}

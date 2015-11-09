@@ -1,0 +1,53 @@
+{% include "layouts/main.twig" %}
+    <section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-2">
+					<div class="left-sidebar">
+						<br />
+						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+							{% include "layouts/categorySideNav.twig" %}
+                        </div><!--/category-products-->
+                    </div>
+				</div>
+				
+				<div class="col-lg-10 padding-right">
+					<div class="features_items"><!--features_items-->
+						<h2 class="title text-center">Features Items</h2>
+
+                        {% include 'layouts/productvView.twig' %}
+
+                    </div><!--features_items-->
+
+                    {{ dezull_dbal_pagination_render(pagination) }}
+
+
+
+
+                </div>
+			</div>
+		</div>
+	</section>
+
+	{% include "layouts/footer.html" %}
+	{% include "layouts/js.twig" %}
+    <script>
+        $(document).ready(function() {
+
+
+
+            $(".pagination > ul > li").css("display", "inline");
+
+            $(".book-picture").css("width", "300px")
+                            .css("height", "300px");
+
+            $(".product-overlay").css("background-color", "blue");
+
+
+
+
+        });
+    </script>
+	{% include "layouts/end.twig" %}
+
+
