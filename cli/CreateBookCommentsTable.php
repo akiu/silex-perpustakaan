@@ -1,4 +1,9 @@
 <?php
+/*
+ * script ini berfungsi untuk membuat tabel yang akan menyimpan comment
+ * untuk setiap buku
+ *
+ */
 
 require_once "../vendor/autoload.php";
 

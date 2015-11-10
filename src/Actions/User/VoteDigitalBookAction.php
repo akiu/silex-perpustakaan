@@ -6,7 +6,7 @@ use ExpressLibrary\Actions\Common\BaseAction;
 
 class VoteDigitalBookAction extends BaseAction
 {
-    public function hanlde()
+    public function handle()
     {
         $conn = $this->app['db'];
 
@@ -25,7 +25,7 @@ class VoteDigitalBookAction extends BaseAction
         $bookId = $conn->fetchAssoc("SELECT id FROM digitalbooks WHERE slug = ?", [$slug]);
 
         $check = $conn->fetchAssoc(
-            "SELECT id FROM Digitalvote WHERE userId = ? AND voteForBookId = ? ",
+            "SELECT id FROM Digitalvote WHERE userId = ? AND voteForDigitalBookId = ? ",
             [
                 $id,
                 $bookId['id']
@@ -40,18 +40,18 @@ class VoteDigitalBookAction extends BaseAction
                 ],
                 [
                     'userId' => $id,
-                    'voteForBookId' => $bookId['id']
+                    'voteForDigitalBookId' => $bookId['id']
                 ]
             );
 
-        } else
-        {
+        } else {
             $conn->insert('Digitalvote',
                 [
                     'userId' => $id,
-                    'voteForBookId' => $bookId['id'],
+                    'voteForDigitalBookId' => $bookId['id'],
                     'voteValue' => $voteResult
                 ]
             );
+        }
     }
 }

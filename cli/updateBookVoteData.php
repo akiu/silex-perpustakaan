@@ -1,4 +1,10 @@
 <?php
+/*
+ * script ini berfungsi untuk
+ *
+ *
+ */
+
 
 include "../vendor/autoload.php";
 
@@ -9,8 +15,6 @@ $conn = Db::getInstance();
 $allId = $conn->fetchAll("SELECT voteForBookId FROM vote");
 
 $filteredId = [];
-
-//$filteredId = array_keys(array_flip($filteredId));
 
 for ($i = 0; $i < count($allId); $i++ )
 {

@@ -1,0 +1,203 @@
+{% include "layouts/main.twig" %}
+
+<section>
+    {% for message in app.session.getFlashBag.get('message') %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong> {{ message }} </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Book Image</div>
+                    <div class="panel-body">
+                        <div class="view-product">
+                            <img src="http://localhost:8000/{{ data.imagePath }}" alt="" />
+                        </div>
+                        <br />
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Votes</div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        {% if vote.voteValue is not defined %}
+                                            <form method="post" action="{{ app.url_generator.generate('voteDigitalBook') }}" novalidate>
+                                                <input hidden value="{{ data.slug }}" name="bookSlug" />
+                                                <input hidden value="like" name="voteResult" />
+                                                <button type="submit"class="btn btn-primary btn-block"><i class="fa fa-thumbs-o-up"></i> Like </button>
+                                            </form>
+                                        {% elseif vote.voteValue != "like" %}
+                                            <form method="post" action="{{ app.url_generator.generate('voteDigitalBook') }}" novalidate>
+                                                <input hidden value="{{ data.slug }}" name="bookSlug" />
+                                                <input hidden value="like" name="voteResult" />
+                                                <button type="submit"class="btn btn-primary btn-block"><i class="fa fa-thumbs-o-up"></i> Like </button>
+                                            </form>
+                                        {% else %}
+                                            <button class="btn btn-default btn-block"><i style="color: red;" class="fa fa-check"></i> Liked </button>
+                                        {% endif %}
+                                    </div>
+                                    <div class="divider-vertical"></div>
+                                    <div class="col-lg-6">
+                                        {% if vote.voteValue is not defined %}
+                                            <form method="post" action="{{ app.url_generator.generate('voteDigitalBook') }}" novalidate>
+                                                <input hidden value="{{ data.slug }}" name="bookSlug" />
+                                                <input hidden value="unlike" name="voteResult" />
+                                                <button type="submit"class="btn btn-primary btn-block"><i class="fa fa-thumbs-o-down"></i> Unlike </button>
+                                            </form>
+                                        {% elseif vote.voteValue != "unlike"  %}
+                                            <form  method="post" action="{{ app.url_generator.generate('voteDigitalBook') }}" novalidate>
+                                                <input hidden value="{{ data.slug }}" name="bookSlug" />
+                                                <input hidden value="unlike" name="voteResult" />
+                                                <button class="btn btn-primary btn-block"><i class="fa fa-thumbs-o-down"></i> Unlike </button>
+                                            </form>
+                                        {% else %}
+                                            <button class="btn btn-default btn-block"><i style="color: red;" class="fa fa-check"></i> Unliked </button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-7">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Book Details</div>
+                    <div class="panel-body">
+
+                        <div class="product-information"><!--/product-information-->
+                            <h2>{{ data.title }}</h2>
+
+                            <ul>
+                                <li style="display: inline;"><i class="fa fa-thumbs-o-up"></i><span style="background-color: red; color: white;" class="badge badge-info">
+                                                   {% if countData[0].result is defined %}
+                                                       {{ countData[0].result }}
+                                                   {% else %}
+                                                       0
+                                                   {% endif %}
+                                                </span></li>
+                                <li style="display: inline;"><i class="fa fa-thumbs-o-down"></i>
+                                    <span style="background-color: red; color: white;" class="badge badge-info">
+                                                   {% if countData[1].result is defined %}
+                                                       {{ countData[1].result }}
+                                                   {% else %}
+                                                       0
+                                                   {% endif %}
+                                                </span></li>
+
+                            </ul>
+                            <p>By {{ data.author }}</p>
+                            <p>{{ data.description | e }}</p>
+                            <a class="btn btn-primary" href="http://localhost:8000/{{ data.attachmentPath }}">Read Online</a>
+
+
+                        </div><!--/product-information-->
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Comments About this Book</div>
+                    <div class="panel-body">
+                        <div class="user-comments">
+
+                            <div class="row">
+                                {% for comment in pagination %}
+                                    <div class="col-lg-12" style="margin-bottom: 10px;">
+                                        <div class="row">
+                                            <div class="col-lg-1">
+                                                <img src="http://localhost:8000/{{ comment.imagePath  }}"
+                                                     style="width : 75px; height: 75px;"/>
+                                            </div>
+                                            <div class="col-lg-11">
+                                                <h6><strong>{{ comment.userName }} berkomentar :</strong></h6>
+                                                <p style="font-size: 15px;">{{ comment.commentContent }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                {% endfor %}
+                            </div>
+
+                        </div>
+
+                        {{ dezull_dbal_pagination_render(pagination) }}
+
+                        <div class="user-comments-forms">
+                            <h7>Post Your Comments</h7>
+                            <form method="POST" action="{{ app.url_generator.generate("commenting", {'slug' : data.slug}) }}">
+                                <textarea id="comment-box" style="border: dashed 1px black;" name="comments" class="form-control">
+
+                                </textarea>
+
+                                <br />
+
+                                <button id="comment-button" class="btn btn-primary" type="submit">Comments</button>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+
+
+
+{% include "layouts/footer.html" %}
+{% include "layouts/js.twig" %}
+
+<script>
+    $(document).ready(function() {
+
+        $(".pagination > ul > li").css("display", "inline");
+
+        $(".book-picture").css("width", "300px")
+                .css("height", "300px");
+
+        $(".product-overlay").css("background-color", "blue");
+
+        $("#comment-button").attr("disabled", "disabled");
+
+        $("#comment-box").on('keyup', function(){
+
+            var $charLength = $("#comment-box").val().length;
+
+            if ($charLength > 200) {
+
+                $("#comment-button").removeAttr("disabled");
+
+            } else {
+
+                $("#comment-button").attr("disabled", "disabled");
+
+            }
+
+        });
+
+    });
+
+</script>
+
+{% include "layouts/end.twig" %}
+
+

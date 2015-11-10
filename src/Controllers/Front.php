@@ -5,9 +5,12 @@ namespace ExpressLibrary\Controllers;
 
 use ExpressLibrary\Actions\Common\CommentAction;
 use ExpressLibrary\Actions\Common\GetAllCommentsBySlugAction;
+use ExpressLibrary\Actions\Common\GetAllDigitalBookCommentBySlugAction;
 use ExpressLibrary\Actions\Common\GetDigitalBookByCategoryAction;
 use ExpressLibrary\Actions\Common\GetDigitalBookBySlugAction;
+use ExpressLibrary\Actions\Common\GetDigitalVoteCountAction;
 use ExpressLibrary\Actions\Common\GetVoteCountAction;
+use ExpressLibrary\Actions\User\GetUserDigitalVoteAction;
 use ExpressLibrary\Actions\User\GetUserVoteAction;
 use ExpressLibrary\Actions\User\GetRejectedBookRequestAction;
 use ExpressLibrary\Actions\User\SignupAction;
@@ -48,27 +51,39 @@ class Front extends BaseController implements ControllerProviderInterface
          */
         $controllers = $app['controllers_factory'];
        
-        $controllers->get('/home', [$this, 'homeAction'])->bind('homepage');
+        $controllers->get('/home', [$this, 'homeAction'])
+            ->bind('homepage');
 
-        $controllers->match('/user/login', [$this, 'userloginAction'])->bind('userLogin');
+        $controllers->match('/user/login', [$this, 'userloginAction'])
+            ->bind('userLogin');
 
-        $controllers->match('/user/signup', [$this, 'signupAction'])->bind('userSignup');
+        $controllers->match('/user/signup', [$this, 'signupAction'])
+            ->bind('userSignup');
 
-        $controllers->match('/user/profile', [$this, 'viewUserProfileAction'])->bind('userProfile')->before([new AuthorizedMiddleware($app), 'authorize'])->bind('userProfile');
+        $controllers->match('/user/profile', [$this, 'viewUserProfileAction'])
+            ->bind('userProfile')->before([new AuthorizedMiddleware($app), 'authorize'])
+            ->bind('userProfile');
 
-        $controllers->get('/user/logout', [$this, 'logoutAction'])->bind('userLogout')->before([new AuthorizedMiddleware($app), 'authorize']);
+        $controllers->get('/user/logout', [$this, 'logoutAction'])
+            ->bind('userLogout')
+            ->before([new AuthorizedMiddleware($app), 'authorize']);
 
-        $controllers->get('/book/{slug}', [$this, 'viewBookBySlugAction'])->bind('viewBookBySlug');
+        $controllers->get('/book/{slug}', [$this, 'viewBookBySlugAction'])
+            ->bind('viewBookBySlug');
 
-        $controllers->get('category/{slug}', [$this, 'viewBooksByCategoryAction'])->bind('viewBooksByCategory');
+        $controllers->get('category/{slug}', [$this, 'viewBooksByCategoryAction'])
+            ->bind('viewBooksByCategory');
 
-        $controllers->match('/user/profile/edit', [$this, 'updateUserProfileAction'])->bind('editUserProfile')->before([new AuthorizedMiddleware($app), 'authorize']);
+        $controllers->match('/user/profile/edit', [$this, 'updateUserProfileAction'])
+            ->bind('editUserProfile')->before([new AuthorizedMiddleware($app), 'authorize']);
 
-        $controllers->post('/book/borrow', [$this, 'borrowBookAction'])->bind('borrowBook')
+        $controllers->post('/book/borrow', [$this, 'borrowBookAction'])
+            ->bind('borrowBook')
             ->before([new AuthorizedMiddleware($app, "To borrow book, please login or sign up"), 'authorize']);
 
         $controllers->get('/book/request/view', [$this, 'viewMyBorrowRequestAction'])
-            ->bind('viewBorrowRequest')->before([new AuthorizedMiddleware($app), 'authorize']);
+            ->bind('viewBorrowRequest')
+            ->before([new AuthorizedMiddleware($app), 'authorize']);
 
         $controllers->post('/book/request/delete', [$this, 'deleteMyBorrowRequestAction'])
             ->bind('deleteBorrowRequest')->before([new AuthorizedMiddleware($app), 'authorize']);
@@ -151,19 +166,36 @@ class Front extends BaseController implements ControllerProviderInterface
 
                } else {
 
-                   $this->app['session']->getFlashBag()->add('message', 'Invalid login credential or your account is not active');
+                   $this->app['session']->getFlashBag()
+                       ->add('message',
+                           'Invalid login credential or your account is not active'
+                       );
 
-                   return $this->app['twig']->render('login.twig', ['form' => $form->createView(), 'categories' => $categories]);
+                   return $this->app['twig']->render('login.twig',
+                       [
+                           'form' => $form->createView(),
+                           'categories' => $categories
+                       ]
+                   );
                }
 
             } else {
 
-                return $this->app['twig']->render('login.twig', ['form' => $form->createView(), 'categories' => $categories]);
-
-            } 
+                return $this->app['twig']->render('login.twig',
+                    [
+                        'form' => $form->createView(),
+                        'categories' => $categories
+                    ]
+                );
+            }
         } else {
 
-                return $this->app['twig']->render('login.twig', ['form' => $form->createView(), 'categories' => $categories]);
+                return $this->app['twig']->render('login.twig',
+                    [
+                        'form' => $form->createView(),
+                        'categories' => $categories
+                    ]
+                );
         }
     }
 
@@ -185,16 +217,30 @@ class Front extends BaseController implements ControllerProviderInterface
 
                $signup->handle($user);
 
-                return $this->app['twig']->render('success.html', ['categories' => $categories]);
+                return $this->app['twig']->render('success.html',
+                    [
+                        'categories' => $categories
+                    ]
+                );
             
             } else {
 
-                return $this->app['twig']->render('signup.html', ['form' => $form->createView(), 'categories' => $categories]);
+                return $this->app['twig']->render('signup.html',
+                    [
+                        'form' => $form->createView(),
+                        'categories' => $categories
+                    ]
+                );
 
             } 
         } else {
 
-                return $this->app['twig']->render('signup.html', ['form' => $form->createView(), 'categories' => $categories]);
+                return $this->app['twig']->render('signup.html',
+                    [
+                        'form' => $form->createView(),
+                        'categories' => $categories
+                    ]
+                );
         }
 
         
@@ -204,7 +250,11 @@ class Front extends BaseController implements ControllerProviderInterface
     {
         $categories = GetAllCategoriesHelper::help(1);
 
-        return $this->app['twig']->render('userProfile.twig', ['categories' => $categories]);
+        return $this->app['twig']->render('userProfile.twig',
+            [
+                'categories' => $categories
+            ]
+        );
     }
 
     public function logoutAction()
@@ -213,7 +263,8 @@ class Front extends BaseController implements ControllerProviderInterface
 
         $action->handle();
 
-        $this->app['session']->getFlashBag()->add('message', 'You are logged out now');
+        $this->app['session']->getFlashBag()
+            ->add('message', 'You are logged out now');
 
         return $this->app->redirect($this->app["url_generator"]->generate("userLogin"));
 
@@ -512,15 +563,42 @@ class Front extends BaseController implements ControllerProviderInterface
         return $this->app->redirect($request->headers->get('referer'));
     }
 
-    public function viewDigitalBookBySlug(Request $request, $slug)
+    public function viewDigitalBookBySlugAction(Request $request, $slug)
     {
+
+        $page = (int) $request->query->get('page', 1);
+
         $action = new GetDigitalBookBySlugAction($this->app);
+
+        $getComment = new GetAllDigitalBookCommentBySlugAction($this->app);
+
+        $getVote = new GetUserDigitalVoteAction($this->app);
+
+        $getCountVote = new GetDigitalVoteCountAction($this->app);
 
         $data = $action->handle($slug);
 
-        return $this->app['twig']->render('viewDigitalBookNySlug.twig',
+        $vote = $getVote->handle($data['id']);
+
+        $qb = $getComment->handle($data['id']);
+
+        $countData = $getCountVote->handle($data['id']);
+
+        $pagination = $this->app['dezull.dbal_paginator']->paginate(
+            $qb,
+            $page,
+            5
+        );
+
+
+        return $this->app['twig']->render('viewDigitalBookBySlug.twig',
             [
-                'data' => $data
+                'data' => $data,
+                'categories' => GetAllCategoriesHelper::help(1),
+                'vote' => $vote,
+                'countData' => $countData,
+                'pagination' => $pagination
+
             ]
         );
     }
