@@ -67,4 +67,16 @@ if ($app['debug']) {
     ]);
 }
 
+$app->error(function (\Exception $e, $code) {
+    switch ($code) {
+        case 404:
+            $message = 'The requested page could not be found.';
+            break;
+        default:
+            $message = 'We are sorry, but something went terribly wrong.';
+    }
+
+    return new \Symfony\Component\HttpFoundation\Response($message);
+});
+
 $app->run();
