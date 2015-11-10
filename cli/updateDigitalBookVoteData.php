@@ -22,7 +22,7 @@ $resArray = array_unique($filteredId);
 
 $secondFilteredId = array_values($resArray);
 
-$sql = "TRUNCATE TABLE  voteResult";
+$sql = "TRUNCATE TABLE  voteDigitalResult";
 
 $stmt = $conn->prepare($sql);
 
